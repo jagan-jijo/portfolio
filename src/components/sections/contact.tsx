@@ -31,7 +31,7 @@ const ContactSection = () => {
                 href="mailto:jaganjijo3@gmail.com"
                 className="text-gray-200 cursor-can-hover rounded-lg"
               >
-                jaganjijo@gmail.com
+                jaganjijo3@gmail.com
               </a>{" "}
               or drop your info here.
             </CardDescription>
