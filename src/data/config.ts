@@ -1,41 +1,23 @@
+import { cvProfile } from "@/data/cv";
+
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 const withBasePath = (path: string) => `${basePath}${path}`;
 
 const config = {
-  title: "Jagan Jijo | Software Developer",
+  title: "Jagan Jijo | Python Software Engineer",
+  headline: cvProfile.headline,
   description: {
-    long: "Explore the portfolio of Jagan Jijo, a software developer and cybersecurity professional specializing in Python backend development, FastAPI, REST APIs, and SIEM integrations. Discover experience in alert monitoring platforms, secure systems, and full-stack work with React, TypeScript, and PostgreSQL.",
+    long: cvProfile.summary,
     short:
-      "Discover the portfolio of Jagan Jijo, a software developer focused on Python, FastAPI, security, and modern web systems.",
+      "Portfolio of Jagan Jijo, a Python software engineer focused on backend systems, AI workflows, security platforms, and modern infrastructure.",
   },
-  keywords: [
-    "Jagan Jijo",
-    "portfolio",
-    "software developer",
-    "cybersecurity",
-    "Python",
-    "FastAPI",
-    "REST APIs",
-    "SIEM",
-    "Microsoft Sentinel",
-    "Splunk",
-    "Wazuh",
-    "Logpoint",
-    "React",
-    "TypeScript",
-    "PostgreSQL",
-    "MongoDB",
-    "Azure",
-    "Azure",
-    "Terraform",
-    "Kubernetes",
-  ],
-  author: "Jagan Jijo",
-  email: "jaganjijo@gmail.com",
-  phone: "07721 691643",
-  location: "Birmingham, UK",
-  site: "https://www.linkedin.com/in/jagan-jijo/",
-  resume: "https://www.linkedin.com/in/jagan-jijo/",
+  keywords: Array.from(new Set(["Jagan Jijo", "portfolio", ...cvProfile.recruiterKeywords])),
+  author: cvProfile.fullName,
+  email: cvProfile.contact.email,
+  phone: cvProfile.contact.phone,
+  location: cvProfile.location,
+  site: cvProfile.contact.linkedin,
+  resume: cvProfile.contact.linkedin,
 
   // for github stars button
   githubUsername: "",
@@ -46,10 +28,10 @@ const config = {
   },
   social: {
     twitter: "",
-    linkedin: "https://www.linkedin.com/in/jagan-jijo/",
+    linkedin: cvProfile.contact.linkedin,
     instagram: "",
     facebook: "",
-    github: "https://github.com/jagan-jijo",
+    github: cvProfile.contact.github,
   },
 };
 export { config, basePath, withBasePath };

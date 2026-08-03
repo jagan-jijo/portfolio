@@ -1,0 +1,197 @@
+---
+title: "AI Can Write the Code. Git Keeps the History."
+publishedAt: "2026-07-10"
+summary: "Why I replaced SSD-based backups with a self-hosted Gitea workflow, and why disciplined Git history matters even more when AI tools can rewrite large parts of a codebase in minutes."
+author: "Jagan Jijo"
+tags: ["ai", "git", "gitea", "self-hosting", "backend"]
+---
+
+Originally published on [LinkedIn](https://www.linkedin.com/pulse/ai-can-write-code-git-keeps-history-jagan-jijo-xnaye/).
+
+# AI Can Write the Code. Git Keeps the History.
+
+## Why I Replaced SSD Backups with a Self-Hosted Git Server
+
+For years, my personal development workflow was fairly simple. I hosted most of my projects locally using Docker containers on my home server, and I kept an external SSD connected as a secondary storage location. It served two purposes: a backup for my projects and a remote Git storage location that I could push to.
+
+On paper, it worked. In practice, it gradually became one of those setups that technically works but consumes far more time than it should.
+
+The SSD started showing signs of failure. I also kept running into random permission issues, Git remotes becoming unavailable, and repositories behaving differently depending on whether the drive had mounted correctly. At some point, I realised I was spending a ridiculous amount of my debugging time fixing the infrastructure around my code rather than actually writing code.
+
+Sometimes, rather than fixing an existing broken remote, I would simply create another remote location because it was quicker. Unsurprisingly, that eventually left me with multiple copies of projects, inconsistent repositories, and a Git history that was far more cluttered than it needed to be.
+
+There was another problem too: visibility.
+
+I use Git from the CLI every day, and VS Code gives me enough information when I'm actively working on a project. But outside the editor, I had no clean interface for browsing repositories, comparing commits, reviewing branches, or quickly understanding how a project had evolved over time.
+
+As someone who works primarily in backend development, I naturally prefer systems where I can understand what is happening, control where the data lives, and maintain a clear audit trail. The more I looked at my existing setup, the more obvious it became that an SSD wasn't really solving the problem I had.
+
+Then AI-assisted development made that problem much more noticeable.
+
+## AI Made Version History More Important, Not Less
+
+After spending eight hours coding at work, my personal development sessions are usually more relaxed. I might be experimenting with a new architecture, building a tool, learning a new technology, or simply testing an idea I have had.
+
+This is where AI coding tools have become genuinely useful for me.
+
+I use ChatGPT Codex, Claude, Cursor, and OpenCode with my own locally hosted AI server depending on what I am working on. These tools can generate, modify, and refactor hundreds of lines of code within minutes. After a full day of professional development work, that can be extremely useful. I can concentrate more of my energy on the logic, architecture, and behaviour of the system while using AI to accelerate implementation, experimentation, and testing.
+
+But there is an obvious trade-off: the faster code changes, the easier it becomes to lose track of exactly what changed.
+
+I started finding myself asking increasingly important questions:
+
+- What exactly changed between this version and the one that worked yesterday?
+- Which AI-generated modification introduced this bug?
+- Can I compare the current implementation with last week's version?
+- Can I reverse one specific change without throwing away everything else I have done since?
+- Do I actually understand every change the AI has made to my codebase?
+
+I am still not at the point where I will blindly trust AI-generated code without understanding what it has written. If an agent changes authentication logic, database access, API behaviour, or Docker configuration, I want to know exactly what changed and why.
+
+This becomes especially important when multiple AI tools are operating against the same codebase. I have learned the hard way that using Codex, OpenCode, and GitHub Copilot across a project can result in surprisingly large architectural changes if the agents are given too much freedom or insufficient context.
+
+One agent refactors a module, another assumes the old architecture still exists, and suddenly you are debugging the interaction between three different interpretations of your own system.
+
+That was when the need for proper Git history and a usable web interface became more urgent than ever.
+
+## Why I Chose Gitea
+
+I was not looking for a replacement for GitHub. I still use GitHub for public repositories.
+
+What I wanted was a private Git environment for my own development infrastructure: something I completely controlled, that worked quickly over my local network, remained available without an internet connection, and could be accessed remotely when necessary.
+
+Gitea fitted that requirement extremely well.
+
+It is lightweight enough to run comfortably alongside my existing Docker infrastructure, provides a clean browser interface for repositories and commit history, supports private repositories by default, and uses the same standard Git workflows I already use professionally.
+
+That last point was particularly important to me. I did not want to create some completely different development workflow for personal projects. I have been using Git from the CLI for years, so I wanted the same familiar process. The destination is different, but the mental model remains exactly the same.
+
+I can work on a personal project in the evening, switch back to a professional development environment the following morning, and I do not have to maintain two completely different source-control workflows in my head.
+
+Gitea also gives me room to extend the environment further. I can create custom Git hooks, build reusable CI/CD workflows with Gitea Actions, and standardise common development checks across my personal projects.
+
+Instead of every project becoming an isolated experiment with its own completely different workflow, I can gradually build a reusable development platform.
+
+## Running Gitea in Docker
+
+Docker was the obvious deployment choice because most of my home infrastructure already runs in containers.
+
+My Gitea instance sits within what I consider my "master" container, alongside services like Nginx, Cloudflare, Qdrant, and other databases. However, I deliberately keep this core stack separated from my application and experimental containers.
+
+That separation matters.
+
+I frequently take development containers down, rebuild images, modify Compose files, and experiment with different services. I do not want my Git server disappearing every time I run `docker compose down` against an unrelated application stack.
+
+Gitea has effectively become part of the infrastructure underneath my development environment, rather than just another application running within it.
+
+Docker also makes the operational side predictable. The application is isolated, repositories and configuration live in persistent storage, upgrades are manageable, and moving the service to another machine in the future would be considerably easier than rebuilding everything manually.
+
+More importantly, the deployment itself becomes reproducible. If the physical server fails, I do not want to remember how I configured Gitea three years earlier. I want a Compose file, persistent data, and a documented recovery process.
+
+That is the difference between having software running on a server and actually treating it as infrastructure.
+
+## My Current AI-Assisted Development Workflow
+
+My workflow now starts before any AI tool writes code.
+
+First, I define the problem and decide what I actually want the system to do. For larger tasks, I break the work into smaller pieces and assign clearly defined responsibilities to AI agents.
+
+The AI can help with implementation, but I still want to own the architecture and logic.
+
+Once code has been generated, I review the changes line by line. I do not assume that code is correct because it compiles, looks convincing, or was produced by a capable model. AI-generated code can be syntactically perfect while still making completely incorrect assumptions about application state, security boundaries, asynchronous behaviour, or data flow.
+
+My cybersecurity background makes me particularly cautious around authentication, secrets, input validation, network exposure, and permission boundaries. A generated function that "works" is not necessarily a function I want running in production.
+
+After reviewing the code, I edit what needs changing and then test it. Depending on the project, that might involve `pytest` for backend testing, Playwright for browser automation and end-to-end testing, alongside manual testing where human judgement still makes sense.
+
+Only when I am comfortable with the state of the code do I commit it, with a meaningful commit message explaining what changed.
+
+That commit becomes a checkpoint.
+
+If the next AI agent goes in completely the wrong direction, I have a known-good state to return to. I can revert a commit, compare changes, create a new branch, or selectively restore specific files.
+
+The important part is that experimentation is no longer irreversible.
+
+I can let an AI agent attempt an aggressive refactor because I know exactly where I started. If the result is useful, I keep it. If it is not, Git makes the recovery trivial.
+
+## Git as an Accountability Layer for AI-Generated Code
+
+I increasingly see Git as more than version control when working with AI. It becomes an accountability layer between the developer and the AI agent.
+
+A model might generate 500 lines of code in a few minutes, but Git tells me precisely what those 500 lines changed.
+
+I can inspect the diff. I can compare the implementation against the previous version. I can isolate changes into branches. I can review whether the AI modified files that were outside the intended scope of the task.
+
+That last point is particularly important with autonomous coding agents. If I ask an agent to modify an API endpoint and it also changes the database schema, authentication middleware, and Docker configuration, I want that immediately visible.
+
+The Git diff becomes the evidence.
+
+This does not remove the need to understand the code. It reinforces it.
+
+AI can accelerate implementation, but the developer still owns the architecture, security, testing, and final decision to accept a change. A clean Git history makes that responsibility much easier to maintain.
+
+## Better Accountability, Even as a Solo Developer
+
+It is easy to think that detailed version control only matters when multiple developers are collaborating on a project. My experience has been the opposite.
+
+When I return to a personal project after three months, I am effectively collaborating with a previous version of myself who has forgotten to document half of his decisions.
+
+A meaningful commit history answers questions that memory cannot.
+
+I can see what changed, when it changed, and why I made that decision. I can identify which branch introduced a particular feature and compare the implementation before and after a major refactor.
+
+This becomes even more valuable when AI tools are involved because the volume of code being produced can be much higher than in a purely manual development workflow.
+
+Good version history reduces the cognitive load of remembering everything.
+
+## Remote Access Without Directly Exposing the Server
+
+Another requirement was remote access.
+
+I wanted to be able to access my repositories when travelling or using another machine, but I did not want to expose unnecessary ports directly to the public internet.
+
+I use Tailscale for secure remote access to the environment. This allows me to reach my Gitea instance from authorised devices without opening inbound firewall ports directly to the internet.
+
+From a cybersecurity perspective, I prefer reducing public attack surface where possible. If a service does not need to be publicly accessible, I do not see a reason to make it public simply for convenience.
+
+The result is that my Git infrastructure behaves almost like a private development cloud. At home, I get fast local access. Away from home, authorised devices can still reach the repositories securely.
+
+## Backups Became Considerably Simpler
+
+One of the original reasons for keeping projects on the SSD was redundancy. Ironically, moving to Gitea made the backup strategy much cleaner.
+
+Previously, I had multiple project directories, various Git remotes, and copies spread across different locations. The more copies I created, the harder it became to know which one was authoritative.
+
+Now Gitea acts as the central source of truth for my private repositories.
+
+Instead of independently managing backups for dozens of projects, I can protect the Gitea data, repositories, and database as a defined unit. One properly designed backup process protects the complete development history of every project hosted there.
+
+There is an important distinction here: Git is not itself a complete backup strategy, and neither is a Docker volume. Hardware can still fail, filesystems can become corrupted, and mistakes can propagate.
+
+My aim is therefore redundancy rather than simply having another folder called backup.
+
+The repository provides version history. Gitea centralises the repositories. Persistent Docker storage protects data across container recreation. Separate backups protect against server or storage failure. For public projects, GitHub can provide an additional remote copy where appropriate. Each layer solves a different failure scenario.
+
+## What Has Actually Improved
+
+The biggest improvement is not really the Gitea interface, although having a proper UI for browsing repositories, branches, and commits is extremely useful. The biggest improvement is confidence.
+
+I can experiment more aggressively because every meaningful stage can become a checkpoint. AI-generated changes are visible and reviewable. A bad refactor does not mean manually reconstructing yesterday's code from memory. An experiment can happen on its own branch without affecting the stable version.
+
+My projects are also better organised. Instead of repositories scattered across directories and unreliable SSD remotes, I now have a central location with complete version history and a familiar Git workflow.
+
+Most importantly, nothing feels irreversible anymore. That matters when you are experimenting with AI agents that can modify large parts of a codebase in seconds.
+
+## Final Thoughts
+
+AI is changing how we write software, but I think it makes disciplined version control more important, not less. The faster code can be generated, the more important it becomes to understand exactly what changed.
+
+For me, Gitea was not about replacing GitHub. It was about building a development environment that better matched how I actually work: backend development, Docker, self-hosted infrastructure, cybersecurity-conscious remote access, and increasingly AI-assisted coding.
+
+I wanted my projects to remain private by default. I wanted reliable version history. I wanted backups that were predictable rather than scattered across drives. I wanted to experiment with AI-generated code without losing control of the architecture.
+
+Most importantly, I wanted every significant change to have a history.
+
+AI can write the code. It can suggest the architecture. It can refactor an entire module in seconds. But I still want to understand the code, review the changes, test the implementation, and decide when it is ready to become part of the project.
+
+Git gives me that control. Gitea simply gave that workflow a home.

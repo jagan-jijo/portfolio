@@ -1,9 +1,12 @@
 import { TypographyH3, TypographyP } from "@/components/ui/typography";
+import { cvProfile } from "@/data/cv";
 import { withBasePath } from "@/data/config";
 import { ReactNode } from "react";
+import { FaJava } from "react-icons/fa";
 import {
   SiDocker,
   SiFastapi,
+  SiJavascript,
   SiKubernetes,
   SiMicrosoftazure,
   SiMongodb,
@@ -33,6 +36,18 @@ const PROJECT_SKILLS = {
     bg: "black",
     fg: "white",
     icon: <SiFastapi />,
+  },
+  javascript: {
+    title: "JavaScript",
+    bg: "black",
+    fg: "white",
+    icon: <SiJavascript />,
+  },
+  java: {
+    title: "Java",
+    bg: "black",
+    fg: "white",
+    icon: <FaJava />,
   },
   postgres: {
     title: "PostgreSQL",
@@ -88,19 +103,30 @@ export type Project = {
   id: string;
   category: string;
   title: string;
+  description: string;
   src: string;
   screenshots: string[];
   skills: { frontend: Skill[]; backend: Skill[] };
-  content: React.ReactNode | any;
+  content: ReactNode;
   github?: string;
-  live: string;
+  live?: string;
+  linkLabel?: string;
+};
+
+export const projectSectionNote = {
+  title: cvProfile.article.title,
+  href: cvProfile.article.href,
+  copy:
+    "Some current client and home-lab work is intentionally kept off public GitHub. I use Gitea for active private repos and publish public write-ups when it helps provide context.",
 };
 
 const projects: Project[] = [
   {
     id: "software-engineer-wrap",
-    category: "Product",
+    category: "Frontend Product",
     title: "Software Engineer Wrap 2025",
+    description:
+      "A browser-only year-in-code card generator with live preview, local storage, and PNG export.",
     src: withBasePath("/assets/projects-screenshots/portfolio/landing.png"),
     screenshots: ["landing.png"],
     skills: {
@@ -108,6 +134,7 @@ const projects: Project[] = [
       backend: [],
     },
     live: "https://jagan-jijo.github.io/softdev-wrapped/",
+    linkLabel: "Open live demo",
     get content() {
       return (
         <div>
@@ -139,13 +166,14 @@ const projects: Project[] = [
     id: "adf-converter",
     category: "Developer Tooling",
     title: "HTML to Atlassian Document Format Converter",
-    src: withBasePath("/assets/projects-screenshots/portfolio/landing.png"),
-    screenshots: ["landing.png"],
+    description:
+      "A Python utility that converts HTML into Atlassian Document Format for JiraPSA incident workflows.",
+    src: withBasePath("/assets/projects-screenshots/portfolio/project.png"),
+    screenshots: ["project.png"],
     skills: {
-      frontend: [PROJECT_SKILLS.python],
+      frontend: [],
       backend: [PROJECT_SKILLS.fastapi],
     },
-    live: "https://www.linkedin.com/in/jagan-jijo/",
     get content() {
       return (
         <div>
@@ -158,113 +186,163 @@ const projects: Project[] = [
             Focused on reliable parsing, clean formatting output, and seamless
             integration with PSA tooling for incident ticketing.
           </TypographyP>
+          <TypographyP>
+            This is part of the practical tooling work I use to reduce manual
+            formatting and speed up backend operational flows.
+          </TypographyP>
         </div>
       );
     },
   },
   {
-    id: "pqc-research",
-    category: "Security Research",
-    title: "Post-Quantum Cryptography Research",
+    id: "agentic-ai-platform",
+    category: "Private Home Lab",
+    title: "Agentic AI Platform at Home",
+    description:
+      "A local-first AI workspace for agentic workflows, document processing, code analysis, and multimodal generation across self-hosted tools.",
     src: withBasePath("/assets/projects-screenshots/portfolio/skills.png"),
     screenshots: ["skills.png"],
     skills: {
-      frontend: [PROJECT_SKILLS.python],
-      backend: [],
+      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.typescript],
+      backend: [
+        PROJECT_SKILLS.python,
+        PROJECT_SKILLS.docker,
+        PROJECT_SKILLS.mongo,
+      ],
     },
-    live: "https://www.linkedin.com/in/jagan-jijo/",
     get content() {
       return (
         <div>
           <TypographyP>
-            Research focused on lattice-based cryptography and NIST standards
-            for post-quantum readiness.
+            Built a private home-lab AI platform for experimenting with
+            agentic workflows, local model orchestration, and retrieval over
+            personal project data.
           </TypographyP>
-          <TypographyH3 className="my-4 mt-8">Focus Areas</TypographyH3>
+          <TypographyH3 className="my-4 mt-8">What it includes</TypographyH3>
           <TypographyP>
-            Evaluated algorithm strengths, transition considerations, and
-            security implications for modern systems.
+            The stack centers around Python services and self-hosted tooling
+            such as Ollama, Open WebUI, Dify, LangChain, LangGraph, LiteLLM,
+            and vector-backed RAG experiments.
+          </TypographyP>
+          <TypographyP>
+            Beyond text workflows, it also covers Docker container management,
+            intelligent document processing, code analysis, image generation,
+            and audio-generation integrations.
+          </TypographyP>
+          <TypographyP>
+            This project is intentionally private and tracked in Gitea rather
+            than mirrored to public GitHub.
           </TypographyP>
         </div>
       );
     },
   },
   {
-    id: "smart-home",
-    category: "IoT + ML",
-    title: "Smart Home Automation Platform",
+    id: "notes-app",
+    category: "Full-Stack Product",
+    title: "Notes Application",
+    description:
+      "A full-stack notes app with guest mode, JWT authentication, and a clean single-page workflow.",
     src: withBasePath("/assets/projects-screenshots/portfolio/projects.png"),
     screenshots: ["projects.png"],
     skills: {
-      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.typescript],
-      backend: [PROJECT_SKILLS.python],
+      frontend: [PROJECT_SKILLS.react],
+      backend: [PROJECT_SKILLS.java],
     },
-    live: "https://www.linkedin.com/in/jagan-jijo/",
+    github: "https://github.com/jagan-jijo/notes-app",
+    live: "https://github.com/jagan-jijo/notes-app",
+    linkLabel: "View GitHub repo",
     get content() {
       return (
         <div>
           <TypographyP>
-            Built a Raspberry Pi-based smart home system integrating IoT sensors
-            and ML automations to improve security and energy efficiency.
+            Built a full-stack notes application with a React 19 + Vite
+            frontend and a Spring Boot backend backed by JPA.
           </TypographyP>
-          <TypographyH3 className="my-4 mt-8">Capabilities</TypographyH3>
+          <TypographyH3 className="my-4 mt-8">Highlights</TypographyH3>
           <TypographyP>
-            Automated device orchestration, sensor-driven alerts, and adaptive
-            routines for convenience and safety.
+            The app supports JWT authentication, user-specific notes storage,
+            guest-mode notes in local storage, and a clean CRUD workflow.
+          </TypographyP>
+          <TypographyP>
+            It uses an H2 relational database and is designed to be easy to run
+            locally with Docker or a single startup script, which keeps it
+            practical for demos and quick testing.
           </TypographyP>
         </div>
       );
     },
   },
   {
-    id: "digital-forensics",
-    category: "Digital Forensics",
-    title: "Borderless Cybercrime Investigation",
-    src: withBasePath("/assets/projects-screenshots/portfolio/project.png"),
-    screenshots: ["project.png"],
-    skills: {
-      frontend: [PROJECT_SKILLS.python],
-      backend: [PROJECT_SKILLS.docker],
-    },
-    live: "https://www.linkedin.com/in/jagan-jijo/",
-    get content() {
-      return (
-        <div>
-          <TypographyP>
-            Comprehensive study on storage media and email investigations,
-            mapping modern challenges in digital forensics across jurisdictions.
-          </TypographyP>
-          <TypographyH3 className="my-4 mt-8">Outcome</TypographyH3>
-          <TypographyP>
-            Documented investigation workflows, evidence handling, and
-            operational constraints for cross-border cases.
-          </TypographyP>
-        </div>
-      );
-    },
-  },
-  {
-    id: "iot-blockchain",
-    category: "IoT Security",
-    title: "Securing IoT Networks with Blockchain",
+    id: "web-pentest",
+    category: "Cyber Security",
+    title: "Web Penetration Testing Toolkit",
+    description:
+      "A FastAPI-based browser toolkit for reconnaissance, vulnerability discovery, and live-streamed security testing.",
     src: withBasePath("/assets/projects-screenshots/portfolio/navbar.png"),
     screenshots: ["navbar.png"],
     skills: {
-      frontend: [PROJECT_SKILLS.python],
-      backend: [PROJECT_SKILLS.docker, PROJECT_SKILLS.azure],
+      frontend: [PROJECT_SKILLS.javascript],
+      backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.fastapi],
     },
-    live: "https://www.linkedin.com/in/jagan-jijo/",
+    github: "https://github.com/jagan-jijo/web-pentest",
+    live: "https://github.com/jagan-jijo/web-pentest",
+    linkLabel: "View GitHub repo",
     get content() {
       return (
         <div>
           <TypographyP>
-            Designed a decentralized approach for IoT data integrity and
-            confidentiality using blockchain-based verification.
+            Built a browser-based security testing toolkit that brings together
+            reconnaissance, WHOIS, DNS intelligence, file analysis, and web
+            server vulnerability checks in one interface.
           </TypographyP>
           <TypographyH3 className="my-4 mt-8">Architecture</TypographyH3>
           <TypographyP>
-            Emphasized secure device communication, tamper-evident logging, and
-            scalable trust models.
+            FastAPI handles the backend services while the UI uses lightweight
+            server-rendered pages and live Server-Sent Events to stream results
+            without page reloads.
+          </TypographyP>
+          <TypographyP>
+            The project is positioned as an educational and authorized-testing
+            toolkit, with a strong focus on visibility into what each check is
+            doing.
+          </TypographyP>
+        </div>
+      );
+    },
+  },
+  {
+    id: "code-graph-builder",
+    category: "AI Developer Tooling",
+    title: "Local-First AI Code Analysis Platform",
+    description:
+      "A local-first code analysis platform for Python and PHP repositories using FastAPI, React, embeddings, and vector search.",
+    src: withBasePath("/assets/projects-screenshots/portfolio/landing.png"),
+    screenshots: ["landing.png"],
+    skills: {
+      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.typescript],
+      backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.fastapi],
+    },
+    github: "https://github.com/jagan-jijo/code-graph-python-php",
+    live: "https://github.com/jagan-jijo/code-graph-python-php",
+    linkLabel: "View GitHub repo",
+    get content() {
+      return (
+        <div>
+          <TypographyP>
+            Built a local-first code analysis platform with a FastAPI backend
+            and React frontend that indexes repositories into a navigable code
+            graph.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">Capabilities</TypographyH3>
+          <TypographyP>
+            The app integrates locally hosted language models through Ollama and
+            Open WebUI, along with embedding models and vector search, to make
+            Python and PHP repositories easier to analyse.
+          </TypographyP>
+          <TypographyP>
+            It is designed around local execution and privacy, while still
+            supporting model-assisted graph refinement on a developer machine.
           </TypographyP>
         </div>
       );

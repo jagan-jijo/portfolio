@@ -1,76 +1,62 @@
 "use client";
-import React from "react";
 
-const PROJECTS = [
-  {
-    id: 1,
-    name: "Software Engineer Wrap 2025",
-    description:
-      "A Spotify Wrapped-style “year in code” card generator. Runs entirely in-browser with live preview and export.",
-    link: "https://jagan-jijo.github.io/softdev-wrapped/",
-  },
-  {
-    id: 2,
-    name: "HTML to Atlassian Document Format Converter",
-    description:
-      "Regex-driven Python module that converts HTML into ADF for JiraPSA workflows.",
-    link: "https://www.linkedin.com/in/jagan-jijo/",
-  },
-  {
-    id: 3,
-    name: "Post-Quantum Cryptography Research",
-    description:
-      "Focused on lattice-based cryptography and NIST standards for PQC readiness.",
-    link: "https://www.linkedin.com/in/jagan-jijo/",
-  },
-  {
-    id: 4,
-    name: "Smart Home Automation Platform",
-    description:
-      "IoT + ML system using Raspberry Pi to automate energy and security workflows.",
-    link: "https://www.linkedin.com/in/jagan-jijo/",
-  },
-  {
-    id: 5,
-    name: "Borderless Cybercrime Investigation",
-    description:
-      "Digital forensics study covering storage media and email investigations.",
-    link: "https://www.linkedin.com/in/jagan-jijo/",
-  },
-  {
-    id: 6,
-    name: "Securing IoT Networks with Blockchain",
-    description:
-      "Decentralized approach for IoT data integrity and confidentiality.",
-    link: "https://www.linkedin.com/in/jagan-jijo/",
-  },
-];
+import Link from "next/link";
+import React from "react";
+import projects, { projectSectionNote } from "@/data/projects";
+
 function Page() {
   return (
-    <>
-      <div className="container mx-auto md:px-[50px] xl:px-[150px] text-zinc-300 h-full">
-        <h1 className="text-4xl mt-[100px] mb-[50px]">Projects</h1>
-        <ul className="grid  md:grid-cols-2 lg:grid-cols-3 gap-10 place-content-around ">
-          {PROJECTS.map((project) => (
-            <li
-              className="w-[300px] h-[260px] border-[.5px] rounded-md border-zinc-600"
-              key={project.id}
-              style={{ backdropFilter: "blur(2px)" }}
-            >
-              <div className="p-4 text-zinc-300">
-                <h2 className="text-xl">{project.name}</h2>
-                <p className="mt-2 text-xs text-zinc-500">
-                  {project.description}
-                </p>
-                <div className="mt-4 inline-flex items-center rounded-full border border-zinc-600 px-3 py-1 text-xs">
-                  Software Developer
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
+    <div className="container mx-auto h-full px-4 pb-20 pt-24 text-zinc-300 md:px-[50px] xl:px-[150px]">
+      <div className="max-w-3xl">
+        <h1 className="mb-4 text-4xl">Projects</h1>
+        <p className="mb-12 text-sm leading-relaxed text-zinc-400">
+          {projectSectionNote.copy}{" "}
+          <Link
+            href={projectSectionNote.href}
+            target="_blank"
+            className="underline underline-offset-4 transition-colors hover:text-zinc-200"
+          >
+            {projectSectionNote.title}
+          </Link>
+          .
+        </p>
       </div>
-    </>
+
+      <ul className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project) => (
+          <li
+            className="min-h-[260px] rounded-md border-[.5px] border-zinc-600"
+            key={project.id}
+            style={{ backdropFilter: "blur(2px)" }}
+          >
+            <div className="flex h-full flex-col p-5 text-zinc-300">
+              <div className="text-[11px] uppercase tracking-[0.2em] text-zinc-500">
+                {project.category}
+              </div>
+              <h2 className="mt-3 text-xl">{project.title}</h2>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-zinc-400">
+                {project.description}
+              </p>
+              <div className="mt-6">
+                {project.live ? (
+                  <Link
+                    href={project.live}
+                    target="_blank"
+                    className="inline-flex items-center rounded-full border border-zinc-600 px-3 py-1 text-xs transition-colors hover:border-zinc-400 hover:text-zinc-100"
+                  >
+                    {project.linkLabel ?? "View project"}
+                  </Link>
+                ) : (
+                  <div className="inline-flex items-center rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-500">
+                    Private / Gitea-managed
+                  </div>
+                )}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

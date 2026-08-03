@@ -11,7 +11,7 @@ import { FloatingDock } from "../ui/floating-dock";
 import Link from "next/link";
 
 import SmoothScroll from "../smooth-scroll";
-import projects, { Project } from "@/data/projects";
+import projects, { Project, projectSectionNote } from "@/data/projects";
 import { cn } from "@/lib/utils";
 import { SectionHeader } from "./section-header";
 
@@ -25,6 +25,17 @@ const ProjectsSection = () => {
         {projects.map((project) => (
           <Modall key={project.id} project={project} />
         ))}
+      </div>
+      <div className="mx-auto mt-8 max-w-3xl px-4 text-sm leading-relaxed text-muted-foreground">
+        {projectSectionNote.copy}{" "}
+        <Link
+          href={projectSectionNote.href}
+          target="_blank"
+          className="underline underline-offset-4 transition-colors hover:text-foreground"
+        >
+          {projectSectionNote.title}
+        </Link>
+        .
       </div>
     </SectionWrapper>
   );
@@ -52,13 +63,19 @@ const Modall = ({ project }: { project: Project }) => {
           </SmoothScroll>
           <ModalFooter className="gap-4">
             <button className="px-2 py-1 bg-gray-200 text-black dark:bg-black dark:border-black dark:text-white border border-gray-300 rounded-md text-sm w-28">
-              Cancel
+              Close
             </button>
-            <Link href={project.live} target="_blank">
-              <button className="bg-black text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-black w-28">
-                Visit
-              </button>
-            </Link>
+            {project.live ? (
+              <Link href={project.live} target="_blank">
+                <button className="bg-black text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-black min-w-28">
+                  {project.linkLabel ?? "Visit"}
+                </button>
+              </Link>
+            ) : (
+              <div className="rounded-md border border-gray-300 px-3 py-1 text-center text-xs text-muted-foreground">
+                Private / Gitea-managed
+              </div>
+            )}
           </ModalFooter>
         </ModalBody>
       </Modal>
@@ -73,24 +90,27 @@ const ProjectContents = ({ project }: { project: Project }) => {
       <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-8">
         {project.title}
       </h4>
-      <div className="flex flex-col md:flex-row md:justify-evenly max-w-screen overflow-hidden md:overflow-visible">
-        <div className="flex flex-row md:flex-col-reverse justify-center items-center gap-2 text-3xl mb-8">
-          <p className="text-sm mt-1 text-neutral-600 dark:text-neutral-500">
-            Frontend
-          </p>
+      {(project.skills.frontend?.length > 0 ||
+        project.skills.backend?.length > 0) && (
+        <div className="flex flex-col md:flex-row md:justify-evenly max-w-screen overflow-hidden md:overflow-visible">
           {project.skills.frontend?.length > 0 && (
-            <FloatingDock items={project.skills.frontend} />
+            <div className="flex flex-row md:flex-col-reverse justify-center items-center gap-2 text-3xl mb-8">
+              <p className="text-sm mt-1 text-neutral-600 dark:text-neutral-500">
+                Frontend
+              </p>
+              <FloatingDock items={project.skills.frontend} />
+            </div>
+          )}
+          {project.skills.backend?.length > 0 && (
+            <div className="flex flex-row md:flex-col-reverse justify-center items-center gap-2 text-3xl mb-8">
+              <p className="text-sm mt-1 text-neutral-600 dark:text-neutral-500">
+                Backend
+              </p>
+              <FloatingDock items={project.skills.backend} />
+            </div>
           )}
         </div>
-        {project.skills.backend?.length > 0 && (
-          <div className="flex flex-row md:flex-col-reverse justify-center items-center gap-2 text-3xl mb-8">
-            <p className="text-sm mt-1 text-neutral-600 dark:text-neutral-500">
-              Backend
-            </p>
-            <FloatingDock items={project.skills.backend} />
-          </div>
-        )}
-      </div>
+      )}
       {/* <div className="flex justify-center items-center">
         {project.screenshots.map((image, idx) => (
           <motion.div
