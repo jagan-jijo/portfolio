@@ -6,6 +6,14 @@ Welcome to my personal portfolio website. It blends immersive visuals with a foc
 
 Live site: https://jagan-jijo.github.io/portfolio/
 
+## Repository And Workspace
+
+- Local path: `/Volumes/ssd_local/Websites/jagan_coder`
+- Gitea repo: `ssh://gitea-local/jagan/jagan_coder.git`
+- GitHub remote: `git@github.com:jagan-jijo/portfolio.git`
+- Legacy parent repo: `/Volumes/ssd_local/Websites` is archive-only and ignores
+  this standalone repo
+
 ## Profile
 Accomplished Software Developer and Cyber Security professional with a First-Class MSc in Advanced Computer Security, CCNA, and Microsoft Certified: Security Operations Analyst Associate credentials. Over 7 years of coding experience specializing in Python backend development (FastAPI, REST APIs), async/multithreaded processing, and third-party API integrations with SIEM platforms (Microsoft Sentinel, Splunk, Wazuh, Logpoint). Experienced in alert-handling systems, PyTest, and refactoring legacy code into scalable OOP architectures.
 
