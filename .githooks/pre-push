@@ -1,0 +1,67 @@
+#!/bin/sh
+
+set -eu
+
+SOURCE_REMOTE="gitea"
+MIRROR_REMOTE="origin"
+BRANCH_NAME="main"
+ZERO_SHA="0000000000000000000000000000000000000000"
+
+remote_name="${1:-}"
+
+if [ "$remote_name" != "$SOURCE_REMOTE" ]; then
+  exit 0
+fi
+
+if [ "${JAGAN_CODER_PREPUSH_SKIP:-0}" = "1" ]; then
+  exit 0
+fi
+
+if ! git remote get-url "$MIRROR_REMOTE" >/dev/null 2>&1; then
+  printf '%s\n' "[jagan-coder-sync] Mirror remote '$MIRROR_REMOTE' is not configured. Skipping GitHub mirror."
+  exit 0
+fi
+
+should_sync=0
+reason="No main push detected for GitHub mirror."
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [ "$local_ref" != "refs/heads/$BRANCH_NAME" ] || [ "$remote_ref" != "refs/heads/$BRANCH_NAME" ]; then
+    continue
+  fi
+
+  if [ "$local_sha" = "$ZERO_SHA" ]; then
+    continue
+  fi
+
+  if git show-ref --verify --quiet "refs/remotes/$MIRROR_REMOTE/$BRANCH_NAME"; then
+    if git merge-base --is-ancestor "$local_sha" "refs/remotes/$MIRROR_REMOTE/$BRANCH_NAME"; then
+      reason="GitHub mirror already has this main tip. Skipping mirror push."
+      break
+    fi
+  fi
+
+  should_sync=1
+  reason="Mirroring 'main' to GitHub before the Gitea push."
+  break
+done
+
+if [ "$should_sync" -ne 1 ]; then
+  printf '%s\n' "[jagan-coder-sync] $reason"
+  exit 0
+fi
+
+printf '%s\n' "[jagan-coder-sync] $reason"
+
+if [ "${JAGAN_CODER_PREPUSH_DRY_RUN:-0}" = "1" ]; then
+  printf '%s\n' "[jagan-coder-sync] Dry run enabled. GitHub mirror was not executed."
+  exit 0
+fi
+
+if JAGAN_CODER_PREPUSH_SKIP=1 git push "$MIRROR_REMOTE" "$BRANCH_NAME:$BRANCH_NAME"; then
+  printf '%s\n' "[jagan-coder-sync] Continuing Gitea push."
+  exit 0
+fi
+
+printf '%s\n' "[jagan-coder-sync] GitHub mirror failed, so the Gitea push has been stopped. Fix the mirror issue and retry your normal push." >&2
+exit 1

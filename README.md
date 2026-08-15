@@ -14,6 +14,14 @@ Live site: https://jagan-jijo.github.io/portfolio/
 - Legacy parent repo: `/Volumes/ssd_local/Websites` is archive-only and ignores
   this standalone repo
 
+## Git Sync
+
+- `gitea` is the primary push target for this clone
+- `origin` points to the GitHub mirror
+- Run `./scripts/setup-git-hooks.sh` once per clone if you want a normal
+  `git push gitea main` to mirror `main` to GitHub automatically before the
+  Gitea push completes
+
 ## Profile
 Accomplished Software Developer and Cyber Security professional with a First-Class MSc in Advanced Computer Security, CCNA, and Microsoft Certified: Security Operations Analyst Associate credentials. Over 7 years of coding experience specializing in Python backend development (FastAPI, REST APIs), async/multithreaded processing, and third-party API integrations with SIEM platforms (Microsoft Sentinel, Splunk, Wazuh, Logpoint). Experienced in alert-handling systems, PyTest, and refactoring legacy code into scalable OOP architectures.
 
