@@ -22,6 +22,14 @@ Live site: https://jagan-jijo.github.io/portfolio/
   `git push gitea main` to mirror `main` to GitHub automatically before the
   Gitea push completes
 
+## Local Gitea And Recovery
+
+- Local Gitea web UI: `http://localhost:1499`
+- Native Gitea durable data: `/Users/jagan/git-backups/gitea-native/service`
+- Native Gitea backups: `/Users/jagan/git-backups/gitea-native/backups`
+- Legacy pre-split history remains in `ssh://gitea-local/jagan/websites-legacy.git`
+- After a reboot, use `/Users/jagan/docker/master/gitea/scripts/ensure-native-gitea-active.sh` before Git operations if the local Gitea service is not already up
+
 ## Profile
 Accomplished Software Developer and Cyber Security professional with a First-Class MSc in Advanced Computer Security, CCNA, and Microsoft Certified: Security Operations Analyst Associate credentials. Over 7 years of coding experience specializing in Python backend development (FastAPI, REST APIs), async/multithreaded processing, and third-party API integrations with SIEM platforms (Microsoft Sentinel, Splunk, Wazuh, Logpoint). Experienced in alert-handling systems, PyTest, and refactoring legacy code into scalable OOP architectures.
 
