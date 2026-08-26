@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Roboto } from "next/font/google";
+import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { config } from "@/data/config";
 
@@ -40,16 +40,22 @@ export const metadata: Metadata = {
   },
 };
 
-const bebasNeue = Bebas_Neue({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["500", "600", "700", "800"],
   variable: "--font-heading",
 });
 
-const roboto = Roboto({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-body",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono",
 });
 
 export default function RootLayout({
@@ -60,7 +66,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={[bebasNeue.variable, roboto.variable].join(" ")}
+      className={[plusJakartaSans.variable, inter.variable, jetbrainsMono.variable].join(" ")}
       suppressHydrationWarning
     >
       <head>

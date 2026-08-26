@@ -8,6 +8,7 @@ export const cvProfile = {
     email: "jaganjijo3@gmail.com",
     linkedin: "https://www.linkedin.com/in/jagan-jijo/",
     github: "https://github.com/jagan-jijo",
+    gitea: "https://www.git.jaganjijo.space",
   },
   workAuthorization:
     "Spouse visa. Permitted to work in the United Kingdom without restrictions and no sponsorship required.",
@@ -211,9 +212,83 @@ export const cvProfile = {
   ],
   projects: [
     {
+      name: "Jagskills — AI Coding Skills Framework",
+      category: "AI Engineering & Agentic Tooling",
+      visibility: "Public",
+      link: "https://github.com/jagan-jijo/jagskills",
+      description:
+        "Portable AI engineering skills and context framework that enforces structured development workflows (Design > TDD > Implementation > Verification > Review), durable memory, and multi-agent coordination across coding assistants.",
+      highlights: [
+        "Created 30+ reusable engineering skills for TDD, debugging, API design, verification, and code reviews.",
+        "Implemented structured context and durable project memory (.memory/, .context/) to maximize signal-to-noise ratio and eliminate context rediscovery.",
+        "Built vendor-agnostic workflows compatible with Antigravity, OpenCode, Claude Code, Cursor, Codex, and Copilot.",
+        "Enforces strict verification and regression testing gates before code completion claims.",
+      ],
+      technologies: [
+        "Python",
+        "TypeScript",
+        "React",
+        "Bash",
+        "Git",
+        "Agentic AI",
+        "Multi-Agent Orchestration",
+        "TDD",
+      ],
+    },
+    {
+      name: "Sidestreamer for Adobe Premiere Pro",
+      category: "macOS & Creative Workflow",
+      visibility: "Public",
+      link: "https://www.jaganjijo.com/sidestreamer/",
+      description:
+        "Native Adobe Premiere Pro CEP extension and macOS Apple Silicon companion service for in-editor YouTube search, unmuted player preview, Instagram media resolution, and direct timeline drag-and-drop.",
+      highlights: [
+        "Built Adobe CEP panel interface communicating with a local background companion daemon via authenticated loopback REST and WebSockets.",
+        "Developed high-performance media download and transcoding pipeline with Cythonized arm64 native modules and FFmpeg integration.",
+        "Implemented direct drag-to-timeline and project bin import using ExtendScript JSX automation.",
+        "Engineered secure loopback authentication with per-install keychain token verification and encrypted session management.",
+      ],
+      technologies: [
+        "Python",
+        "FastAPI",
+        "Cython",
+        "Adobe Premiere Pro CEP",
+        "ExtendScript",
+        "React",
+        "TypeScript",
+        "SQLite",
+        "macOS / Apple Silicon",
+      ],
+    },
+    {
+      name: "DocMaker — Structured Document Platform",
+      category: "Backend & Document Engineering",
+      visibility: "Gitea-hosted",
+      link: "https://www.git.jaganjijo.space",
+      description:
+        "Local-first business document generation platform built with Django, Playwright, and SQLite to replace manual Photoshop/PSD editing with maintainable templates, modular clauses, and instant browser-based PDF generation.",
+      highlights: [
+        "Built to solve recurring operational bottlenecks for business owners and creator side-hustles by generating professional PDFs in minutes.",
+        "Replaced slow, manual design workflows (PSDs, Word files) with a schema-driven pipeline that generates pixel-perfect PDFs in minutes.",
+        "Engineered headless Playwright rendering service for razor-sharp CSS print compilation while keeping sensitive documents 100% within the organization.",
+        "Implemented dynamic forms, live HTML previews, modular clause libraries, document versioning, and immutable audit history.",
+        "Designed agent-ready API and CLI architecture for downstream automation and local orchestration.",
+      ],
+      technologies: [
+        "Python",
+        "Django",
+        "Playwright",
+        "JSON Schema",
+        "SQLite",
+        "HTML5 / CSS",
+        "CLI",
+      ],
+    },
+    {
       name: "Agentic AI Platform",
       category: "Private Home Lab",
-      visibility: "Private / Gitea-managed",
+      visibility: "Gitea-hosted",
+      link: "https://www.git.jaganjijo.space",
       description:
         "Agentic AI platform developed with FastAPI and multiple LLM and generative AI frameworks for Docker management, intelligent document processing, code analysis, image generation, audio generation, and agentic workflows.",
       highlights: [

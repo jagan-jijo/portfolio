@@ -1,0 +1,162 @@
+---
+title: "Building a Disciplined Engineering Framework for AI Coding Agents"
+publishedAt: "2026-08-26"
+summary: "Why fast code generation isn't the same as good software engineering, and how Jagskills brings TDD, structured memory, verification gates, and disciplined workflows to AI coding assistants."
+author: "Jagan Jijo"
+tags: ["ai", "agents", "software-engineering", "tdd", "jagskills", "architecture"]
+---
+
+# Building a Disciplined Engineering Framework for AI Coding Agents
+
+AI coding assistants are good at one thing in particular: producing an answer fast. You describe a feature, and thirty seconds later there's a diff sitting in front of you. You paste a stack trace, and it usually finds the bug before you've finished your coffee. Give it five unrelated tasks and, these days, it might even chew through them in parallel like it's got somewhere to be.
+
+None of that is the problem. The problem is what happens next, which is usually: nothing. No design thinking, no "wait, should this even live here", no tests written first, just code that looks plausible sitting there waiting to be trusted. So I started asking a slightly different question than "how good is the model," which is:
+
+> *How do we make AI-assisted development actually behave like engineering, instead of a very fast, very confident vending machine for code?*
+
+That question turned into **Jagskill**, an open-source framework I've been quietly building and using on my own projects for a few months now. It's not a prompt pack. I want to be clear about that up front, because "prompt pack" undersells it and also because I've written enough prompt packs in my life to know the difference. Jagskill is closer to an operating model, a set of habits an agent is expected to follow, the same way a junior engineer is expected to follow habits once someone senior has had a word with them.
+
+There are 29+ skills in it right now, covering things like TDD, debugging, code review, API design, testing strategy, frontend work, logging, parallel agent coordination, and project memory. It's built to work across Copilot, Codex, OpenCode, Cursor, Antigravity, and Claude Code, because the whole point is that the methodology belongs to the project, not to whichever vendor you happened to be subscribed to that month.
+
+---
+
+## The Problem with "Just Generate the Code"
+
+Take an innocent-looking request like *"add authentication to this API."* Every engineer who's shipped anything real knows this sentence is doing a lot of hiding. What mechanism? Where does it live architecturally? What's already the convention in this codebase? What happens when it fails? What gets tested? What are we quietly assuming is secure that maybe isn't?
+
+A model can reason through all of that. It's not incapable. But it will only bother if the environment around it nudges it to, because the path of least resistance is always:
+
+```text
+Request > generate code > run something > declare victory.
+```
+
+Fast, yes. Also the same energy as a contractor who finishes the kitchen and leaves before you notice the sink doesn't drain.
+
+---
+
+## From Prompts to Actual Skills
+
+The biggest shift for me was refusing to treat every interaction as its own isolated prompt. Instead of retyping *"write tests first, keep it simple, verify before claiming you're done"* into the chat box for the four hundredth time, that behaviour now just lives in the project as a skill: brainstorming, TDD, debugging, verification, code review, API design, logging, frontend work, parallel agents, AI integration, code quality, and so on.
+
+The agent inherits the workflow instead of me re-explaining my values to it every Tuesday.
+
+---
+
+## Stitching Skills into Workflows
+
+Skills get more useful once they chain together.
+
+* **A feature becomes:** Brainstorming → Design Spec → TDD → Implementation → Verification → Review.
+* **A bug becomes something entirely different:** Root-cause investigation first, a regression test second, and only then a fix, followed by verification and review.
+
+That second one matters a lot to me. *"Can you fix this bug"* should not immediately produce a patch. It should produce an answer to *"why does this happen"* first, and only after that does anyone touch the implementation. This is not a novel idea — it's just normal engineering discipline. The interesting part is getting an AI agent to actually do it instead of skipping straight to the satisfying part.
+
+---
+
+## Every Project is its Own Animal
+
+One codebase runs Python 3.12, FastAPI, SQLAlchemy, and pytest. Another is TypeScript and React and doesn't share a single architectural opinion with the first one.
+
+So Jagskill splits things into two layers: general engineering methodology that doesn't change, and a `.jagskill` config file that captures the project-specific stuff — directory structure, naming, typing, error handling, testing conventions, logging, the works. The agent gets both. General principles plus local law.
+
+---
+
+## Memory, or: Why "Just Give it Everything" Doesn't Work
+
+Big context windows tempt you into a bad habit, which is dumping everything into the model and hoping it figures out what matters. Source code, old prompts, documentation, three debugging sessions from last month, ancient implementation notes, all of it, every time.
+
+Some of that is useful. Most of it is dead weight the model now has to wade through to find the two facts it actually needs.
+
+The goal isn't *"use fewer tokens."* The goal is *"use tokens on things that matter,"* which is a different, more interesting problem. Signal-to-noise, not token-counting.
+
+So instead of making the agent rediscover the architecture from scratch every session, Jagskill keeps a compact record:
+1. The architecture and how the pieces relate.
+2. The conventions that keep showing up.
+3. The decisions that were made and why.
+4. The implementation history that's still relevant.
+5. Whatever context the current task actually needs.
+
+The repo stays the source of truth. Memory is just a compressed map of it so the agent doesn't have to re-survey the whole territory every time it wants to change one endpoint.
+
+---
+
+## Why That Actually Saves Tokens
+
+Picture an agent that needs to touch one API endpoint with no memory and no conventions file to lean on. It has to go read the project structure, the routing, the service layer, error handling, test setup, logging conventions, typing conventions, and whatever's been done before that's related. That's eight things to relearn before it's written a single line.
+
+If a compact version of all that already exists, the agent spends its budget understanding the actual problem instead of re-deriving the whole codebase from first principles every session. Fewer redundant file reads, fewer repeated explanations, smaller prompts. Token savings is the nice side effect here; the real win is that the model's attention goes somewhere useful instead of somewhere familiar.
+
+---
+
+## Let the Tools Do the Lying-Detection
+
+Models are probabilistic. Compilers, type checkers, test runners, and LSP tooling are not — they either pass or they don't, and they don't care how confident the model sounded.
+
+So the loop is: the agent makes a change, the LSP flags a type or import problem, the agent investigates and fixes it, tests run, and only then does anything get called finished. The model proposes, the tooling disposes.
+
+---
+
+## Evidence Before Claims
+
+My favourite sentence an AI coding agent can produce is *"all tests should now pass."*
+
+*Should.* That word is carrying the entire claim on its back with no support underneath it.
+
+Verification asks something more specific: **what evidence actually demonstrates this works?** Depending on the task that might mean running targeted tests, running the whole suite, checking types, checking lint, building the thing, poking at runtime behaviour, or actually reading the diff.
+
+There's a gate between *"I implemented it"* and *"I'm claiming it's done,"* and the gate has to be walked through, not gestured at.
+
+---
+
+## Parallel Agents Without a Pileup
+
+Multiple agents working at once is genuinely useful, right up until they start stepping on each other's work and you're left untangling a three-way merge conflict authored entirely by robots.
+
+So parallel work only happens when tasks are actually independent:
+* Feature A to one agent
+* Feature B to another
+* Tests to a third
+
+Everything still goes through review and integration afterward. The goal isn't to see how many agents you can cram into a task. It's identifying what genuinely doesn't need to touch anything else, the same judgment call you'd make handing out tickets to a human team.
+
+---
+
+## Why it Isn't Tied to One Vendor
+
+Whatever coding assistant is popular right now probably won't be the one everyone's using next year — this space moves fast enough that betting the whole methodology on one tool's specific config format felt like a bad idea.
+
+So Jagskill can generate configuration for Copilot, Codex, OpenCode, Cursor, Antigravity, and Claude Code, but the skills underneath stay the same. Project standards feed into the skills and memory and workflows, that feeds into whatever assistant-specific config is needed, and that's what the agent actually runs on.
+
+Switch tools, keep the methodology. It's supposed to outlive your subscription choices.
+
+---
+
+## The Metric Nobody Talks About
+
+Everyone's fixated on how much code AI can generate. I think the more interesting number is how much engineering discipline you can wrap around the generation, because 1,000 lines produced in ten seconds isn't a win if someone then spends three hours untangling, reviewing, and quietly rewriting half of it.
+
+The value shows up when the system pushes toward `understand > design > test > implement > verify > review`, instead of the much more tempting `prompt > generate > hope`.
+
+---
+
+## What I Actually Learned Doing This
+
+Prompt engineering turned out to be table stakes. The real work is closer to **context and workflow engineering**:
+* Deciding what the agent sees and when it sees it.
+* What should stick around across sessions.
+* What should come straight from the repo instead of memory.
+* Which workflow should fire for a given task.
+* Which tools should be checking its work.
+* What counts as proof before anyone calls something finished.
+
+Once those pieces are actually designed together instead of improvised prompt by prompt, the whole thing gets a lot more useful, and a lot less like gambling.
+
+---
+
+## It's Open Source Now
+
+I built the first version on my own Gitea server and have been dogfooding it ever since. It's MIT licensed now and public:
+
+👉 [**github.com/jagan-jijo/jagskills**](https://github.com/jagan-jijo/jagskills)
+
+I'd genuinely like feedback on the memory architecture, context and token optimization, workflow orchestration, cross-agent compatibility, verification strategy, multi-agent setups, and anything else that feels like a missing skill. AI can already write a staggering amount of software. The part still worth arguing about is whether we're using that to produce better-engineered software, or just more of it.

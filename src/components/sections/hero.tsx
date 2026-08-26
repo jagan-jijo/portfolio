@@ -36,8 +36,8 @@ const HeroSection = () => {
                 <BlurIn delay={0.7}>
                   <p
                     className={cn(
-                      "md:self-start mt-4 font-thin text-md text-slate-500 dark:text-zinc-400",
-                      "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
+                      "md:self-start mt-4 font-semibold text-xs sm:text-sm uppercase tracking-widest text-primary/80 dark:text-primary/70",
+                      "cursor-default whitespace-nowrap"
                     )}
                   >
                     Hi, I am
@@ -50,30 +50,31 @@ const HeroSection = () => {
                     <TooltipTrigger asChild>
                       <h1
                         className={cn(
-                          "-ml-[6px] leading-none font-thin text-transparent text-slate-800 text-left",
-                          "font-thin text-7xl md:text-7xl lg:text-8xl xl:text-9xl",
-                          "cursor-default text-edge-outline font-display "
+                          "leading-[1.05] font-extrabold text-foreground text-left tracking-tight",
+                          "text-5xl sm:text-6xl md:text-7xl lg:text-8xl",
+                          "cursor-default transition-all duration-300 hover:text-primary"
                         )}
                       >
                         {config.author.split(" ")[0]}
-                        <br className="md:block hiidden" />
-                        {config.author.split(" ")[1]}
+                        <br className="md:block hidden" />{" "}
+                        <span className="text-zinc-400 dark:text-zinc-500 font-bold">
+                          {config.author.split(" ")[1]}
+                        </span>
                       </h1>
                     </TooltipTrigger>
                     <TooltipContent
                       side="top"
-                      className="dark:bg-white dark:text-black"
+                      className="dark:bg-white dark:text-black font-sans"
                     >
                       theres something waiting for you in devtools
                     </TooltipContent>
                   </Tooltip>
                 </BlurIn>
-                {/* <div className="md:block hidden bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 w-screen h-px animate-fade-right animate-glow" /> */}
                 <BlurIn delay={1.2}>
                   <p
                     className={cn(
-                      "md:self-start md:mt-4 max-w-2xl font-thin text-md leading-relaxed text-slate-500 dark:text-zinc-400",
-                      "cursor-default font-display sm:text-xl md:text-xl whitespace-normal bg-clip-text "
+                      "md:self-start mt-4 max-w-2xl font-normal text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground",
+                      "cursor-default whitespace-normal"
                     )}
                   >
                     {config.headline}

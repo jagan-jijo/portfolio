@@ -4,8 +4,11 @@ import { withBasePath } from "@/data/config";
 import { ReactNode } from "react";
 import { FaJava } from "react-icons/fa";
 import {
+  SiAdobepremierepro,
+  SiDjango,
   SiDocker,
   SiFastapi,
+  SiGit,
   SiJavascript,
   SiKubernetes,
   SiMicrosoftazure,
@@ -13,6 +16,7 @@ import {
   SiPostgresql,
   SiPython,
   SiReact,
+  SiSqlite,
   SiTerraform,
   SiTypescript,
 } from "react-icons/si";
@@ -36,6 +40,12 @@ const PROJECT_SKILLS = {
     bg: "black",
     fg: "white",
     icon: <SiFastapi />,
+  },
+  django: {
+    title: "Django",
+    bg: "black",
+    fg: "white",
+    icon: <SiDjango />,
   },
   javascript: {
     title: "JavaScript",
@@ -97,6 +107,24 @@ const PROJECT_SKILLS = {
     fg: "white",
     icon: <SiKubernetes />,
   },
+  premiere: {
+    title: "Premiere Pro",
+    bg: "black",
+    fg: "white",
+    icon: <SiAdobepremierepro />,
+  },
+  sqlite: {
+    title: "SQLite",
+    bg: "black",
+    fg: "white",
+    icon: <SiSqlite />,
+  },
+  git: {
+    title: "Git",
+    bg: "black",
+    fg: "white",
+    icon: <SiGit />,
+  },
 };
 
 export type Project = {
@@ -117,16 +145,218 @@ export const projectSectionNote = {
   title: cvProfile.article.title,
   href: cvProfile.article.href,
   copy:
-    "Some current client and home-lab work is intentionally kept off public GitHub. I use Gitea for active private repos and publish public write-ups when it helps provide context.",
+    "Some current client, tool, and home-lab projects are intentionally hosted on my personal Gitea server (www.git.jaganjijo.space). While many repositories remain private, select projects and architecture write-ups are public.",
 };
 
 const projects: Project[] = [
+  {
+    id: "sidestreamer",
+    category: "macOS & Creative Workflow",
+    title: "Sidestreamer for Adobe Premiere Pro",
+    description:
+      "A native Adobe Premiere Pro CEP extension + macOS companion daemon for in-editor YouTube/Instagram search, scrub preview, and direct timeline drag-and-drop.",
+    src: withBasePath("/assets/projects-screenshots/portfolio/navbar.png"),
+    screenshots: ["navbar.png"],
+    skills: {
+      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.typescript, PROJECT_SKILLS.premiere],
+      backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.fastapi, PROJECT_SKILLS.sqlite],
+    },
+    live: "https://www.jaganjijo.com/sidestreamer/",
+    linkLabel: "Visit website / Download",
+    get content() {
+      return (
+        <div>
+          <TypographyP>
+            Sidestreamer connects video editors directly to streaming media
+            sources without ever leaving the Adobe Premiere Pro timeline.
+            Because let&rsquo;s be honest: alt-tabbing to shady downloader
+            websites, dodging popups, waiting for files in Downloads, and
+            manually dragging them into bins is a workflow from 2020.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">What It Does</TypographyH3>
+          <TypographyP>
+            <strong>Integrated YouTube Search & Player:</strong> Search
+            YouTube, preview with scrub controls unmuted (no surprise blaring
+            volume), and queue downloads up to 4K or lossless audio extraction
+            when you just need that one sound effect right now.
+          </TypographyP>
+          <TypographyP>
+            <strong>Embedded Instagram Browsing:</strong> Browse Feed, Explore,
+            Saved reels, and direct messages with native login and one-click
+            media resolution.
+          </TypographyP>
+          <TypographyP>
+            <strong>Direct Timeline Drag & Drop:</strong> Drag downloaded media
+            straight from the panel onto active sequence tracks, with automated
+            project bin sorting via ExtendScript JSX.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">Architecture & Security</TypographyH3>
+          <TypographyP>
+            Built as a lean Adobe CEP panel communicating with a high-speed
+            Python + FastAPI macOS companion daemon. Core extraction engines are
+            Cythonized with Apple Silicon arm64 optimizations. Everything runs
+            strictly on authenticated loopback (127.0.0.1) with per-session
+            token handshakes and encrypted session storage — your credentials
+            and files stay strictly on your machine.
+          </TypographyP>
+        </div>
+      );
+    },
+  },
+  {
+    id: "jagskills",
+    category: "AI Engineering & Agentic Tooling",
+    title: "Jagskills — AI Coding Skills Framework",
+    description:
+      "An engineering framework and context management system that cures AI coding agents of vibe-coded slop by enforcing TDD, verification gates, and durable project memory.",
+    src: withBasePath("/assets/projects-screenshots/portfolio/skills.png"),
+    screenshots: ["skills.png"],
+    skills: {
+      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.typescript],
+      backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.git],
+    },
+    github: "https://github.com/jagan-jijo/jagskills",
+    live: "https://github.com/jagan-jijo/jagskills",
+    linkLabel: "View GitHub repo",
+    get content() {
+      return (
+        <div>
+          <TypographyP>
+            AI coding agents are ridiculously fast. But fast code generation
+            isn&rsquo;t the same as good software engineering. Without structure,
+            agents (Codex, Claude Code, Antigravity, OpenCode, Cursor,
+            Copilot — I&rsquo;ve tried them all😂) tend to produce vibe-coded
+            slop: hallucinating dependencies, skipping tests, forgetting rules,
+            burning tokens rediscovering things they knew five minutes ago, and
+            confidently declaring work done without running a single check.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">Why Jagskills</TypographyH3>
+          <TypographyP>
+            Jagskills is my attempt to fix that (didn&rsquo;t spend months
+            brainstorming the name, ngl). Instead of re-explaining how you want
+            agents to work every single session, Jagskills equips them with
+            reusable engineering workflows and memory patterns that live with
+            the repository — not whichever AI vendor you&rsquo;re using this
+            month.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">The Engineering Flow</TypographyH3>
+          <TypographyP>
+            • <strong>New Features:</strong> Clarify Intent → Design Spec → TDD
+            (Red/Green) → Implementation → Verification → Code Review
+            <br />
+            • <strong>Bug Fixes:</strong> Root Cause Analysis → Regression Test
+            → Fix → Verification → Review
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">Memory & 30+ Reusable Skills</TypographyH3>
+          <TypographyP>
+            Adds structured project memory (.memory/, .context/) so agents retain
+            architecture conventions and past decisions instead of rediscovering
+            the codebase from scratch. Features 30+ modular skills covering TDD,
+            debugging, API design, verification gates, parallel agent teams,
+            frontend work, and token reduction.
+          </TypographyP>
+        </div>
+      );
+    },
+  },
+  {
+    id: "docmaker",
+    category: "Backend & Document Engineering",
+    title: "DocMaker — Structured Document Platform",
+    description:
+      "A local-first document engine turning structured data and reusable clauses into pixel-perfect PDFs in minutes — built to end the pain of Photoshop PSD invoices and designer turnaround bottlenecks.",
+    src: withBasePath("/assets/projects-screenshots/portfolio/project.png"),
+    screenshots: ["project.png"],
+    skills: {
+      frontend: [PROJECT_SKILLS.javascript],
+      backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.django, PROJECT_SKILLS.sqlite],
+    },
+    live: "https://www.git.jaganjijo.space",
+    linkLabel: "View on Gitea",
+    get content() {
+      return (
+        <div>
+          <TypographyP>
+            Several friends who run their own businesses came to me complaining
+            about a persistent operational pain point: they were drowning in a
+            mountain of Photoshop <code>.psd</code> templates and Word documents
+            just to draft everyday client invoices, agreements, and proposals.
+            Every time a line item, client name, or clause changed, they had to
+            either pixel-nudge layers in Photoshop or wait days for a graphic
+            designer to do a simple turnaround.
+          </TypographyP>
+          <TypographyP>
+            To make matters even more relatable, during weekends when I switch
+            into my photographer &amp; content-creator alter-ego, I kept running
+            into the exact same headache — needing to shoot out a clean invoice
+            or client agreement in two minutes without opening heavy design
+            software.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">The Solution: Minutes Instead of Days</TypographyH3>
+          <TypographyP>
+            DocMaker solves this once and for all: a clean, local-first platform
+            where anyone can generate high-quality, professional PDFs directly
+            in their standard web browser. Designs are defined once as
+            maintainable, modular templates, cutting document creation time from
+            days of designer back-and-forth to literally two minutes.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">Core Philosophy: Data as Source of Truth</TypographyH3>
+          <TypographyP>
+            Instead of fragile visual files or bloated word processors, DocMaker
+            separates data from presentation:
+          </TypographyP>
+          <TypographyP>
+            <code className="rounded bg-zinc-800 px-2 py-1 text-xs text-zinc-300">
+              Custom Template + Structured JSON Data + Modular Clauses → HTML Live Preview → Pixel-Perfect PDF
+            </code>
+          </TypographyP>
+          <TypographyP>
+            Contracts, NDAs, proposals, invoices, and scopes of work stay
+            100% inside your organization—no third-party cloud leaks, no
+            broken font alignments.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">Key Capabilities</TypographyH3>
+          <TypographyP>
+            • <strong>Dynamic Forms & Live Browser Preview:</strong> Schema-driven
+            inputs with immediate visual feedback before compiling.
+            <br />
+            • <strong>Headless Playwright PDF Engine:</strong> Generates razor-sharp,
+            print-perfect vector PDFs via standards-compliant CSS print layouts.
+            <br />
+            • <strong>Modular Clause & Content Library:</strong> Reusable,
+            conditionally injected legal clauses and brand blocks across doc types.
+            <br />
+            • <strong>Drafts & Version Audit Trail:</strong> Immutable snapshot
+            history so you can track revisions and regenerate past outputs anytime.
+            <br />
+            • <strong>Agent & API Ready:</strong> Standalone UI and CLI with a
+            clean service layer ready for downstream AI agents (Hermes) and internal
+            CRMs.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">Private Infrastructure</TypographyH3>
+          <TypographyP>
+            Built with Django, Playwright, JSON Schema, and SQLite. Hosted and
+            managed on my personal Gitea server at{" "}
+            <a
+              href="https://www.git.jaganjijo.space"
+              target="_blank"
+              rel="noreferrer"
+              className="text-purple-400 underline underline-offset-4 hover:text-purple-300"
+            >
+              www.git.jaganjijo.space
+            </a>
+            .
+          </TypographyP>
+        </div>
+      );
+    },
+  },
   {
     id: "software-engineer-wrap",
     category: "Frontend Product",
     title: "Software Engineer Wrap 2025",
     description:
-      "A browser-only year-in-code card generator with live preview, local storage, and PNG export.",
+      "A Spotify Wrapped-style year-in-code card generator with live preview, local storage, and PNG export — 100% browser-only.",
     src: withBasePath("/assets/projects-screenshots/portfolio/landing.png"),
     screenshots: ["landing.png"],
     skills: {
@@ -139,19 +369,21 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP>
-            A Spotify Wrapped-style “year in code” card generator for developers.
-            It runs 100% in your browser—no backend, no uploads, just your data
-            on your device.
+            A Spotify Wrapped-style &ldquo;year in code&rdquo; card generator for
+            developers. It runs 100% in your browser — zero backend, zero
+            tracking, and no servers to crash when everyone shares their stats at
+            once.
           </TypographyP>
           <TypographyH3 className="my-4 mt-8">What it does</TypographyH3>
           <TypographyP>
-            Build a tall 9:16 story card with your yearly stats, preview changes
-            live while you edit, and export a crisp PNG for sharing.
+            Build a tall 9:16 story card with your yearly coding stats, preview
+            changes live while you edit, and export a crisp PNG ready to flex on
+            social media (or quietly keep to yourself).
           </TypographyP>
           <TypographyP>
-            Themes include 2 dark + 2 light options, plus custom badges, apps,
-            and language highlights. Local storage keeps everything saved
-            automatically.
+            Themes include 2 dark + 2 light options (sunglasses recommended),
+            plus custom badges, apps, and language highlights. Local storage
+            keeps everything saved automatically.
           </TypographyP>
           <TypographyH3 className="my-4 mt-8">Notes</TypographyH3>
           <TypographyP>
@@ -167,7 +399,7 @@ const projects: Project[] = [
     category: "Developer Tooling",
     title: "HTML to Atlassian Document Format Converter",
     description:
-      "A Python utility that converts HTML into Atlassian Document Format for JiraPSA incident workflows.",
+      "A Python utility that converts HTML into Atlassian Document Format for JiraPSA incident workflows without mangling formatting.",
     src: withBasePath("/assets/projects-screenshots/portfolio/project.png"),
     screenshots: ["project.png"],
     skills: {
@@ -178,17 +410,19 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP>
-            Built a regex-driven Python module that converts HTML into Atlassian
-            Document Format (ADF) for JiraPSA workflows.
+            A regex-driven Python module that converts messy HTML into clean
+            Atlassian Document Format (ADF) for JiraPSA ticketing workflows.
           </TypographyP>
-          <TypographyH3 className="my-4 mt-8">Highlights</TypographyH3>
+          <TypographyH3 className="my-4 mt-8">Why it exists</TypographyH3>
           <TypographyP>
-            Focused on reliable parsing, clean formatting output, and seamless
-            integration with PSA tooling for incident ticketing.
+            Anyone who has ever tried copy-pasting rich formatted text into Jira
+            and watched the formatting explode into modern abstract art knows the
+            pain. This tool automates the transformation reliably behind the
+            scenes during incident automation flows.
           </TypographyP>
           <TypographyP>
-            This is part of the practical tooling work I use to reduce manual
-            formatting and speed up backend operational flows.
+            Built for speed, rock-solid edge-case parsing, and saving developers
+            from manual formatting purgatory.
           </TypographyP>
         </div>
       );
@@ -199,7 +433,7 @@ const projects: Project[] = [
     category: "Private Home Lab",
     title: "Agentic AI Platform at Home",
     description:
-      "A local-first AI workspace for agentic workflows, document processing, code analysis, and multimodal generation across self-hosted tools.",
+      "A self-hosted, local-first AI workspace for agentic workflows, document processing, code analysis, and multimodal generation.",
     src: withBasePath("/assets/projects-screenshots/portfolio/skills.png"),
     screenshots: ["skills.png"],
     skills: {
@@ -210,28 +444,27 @@ const projects: Project[] = [
         PROJECT_SKILLS.mongo,
       ],
     },
+    live: "https://www.git.jaganjijo.space",
+    linkLabel: "View on Gitea",
     get content() {
       return (
         <div>
           <TypographyP>
-            Built a private home-lab AI platform for experimenting with
-            agentic workflows, local model orchestration, and retrieval over
-            personal project data.
+            A private home-lab platform for running agentic workflows, local
+            model orchestration, and retrieval over personal project data —
+            without sending every keystroke to third-party cloud providers or
+            racking up surprise API bills.
           </TypographyP>
           <TypographyH3 className="my-4 mt-8">What it includes</TypographyH3>
           <TypographyP>
             The stack centers around Python services and self-hosted tooling
-            such as Ollama, Open WebUI, Dify, LangChain, LangGraph, LiteLLM,
-            and vector-backed RAG experiments.
+            including Ollama, Open WebUI, Dify, LangChain, LangGraph, LiteLLM,
+            and vector-backed RAG pipelines.
           </TypographyP>
           <TypographyP>
-            Beyond text workflows, it also covers Docker container management,
-            intelligent document processing, code analysis, image generation,
-            and audio-generation integrations.
-          </TypographyP>
-          <TypographyP>
-            This project is intentionally private and tracked in Gitea rather
-            than mirrored to public GitHub.
+            Handles container orchestration, intelligent document processing,
+            code analysis, and multimodal generation across local GPUs.
+            Maintained privately on a self-hosted Gitea instance.
           </TypographyP>
         </div>
       );
@@ -242,7 +475,7 @@ const projects: Project[] = [
     category: "Full-Stack Product",
     title: "Notes Application",
     description:
-      "A full-stack notes app with guest mode, JWT authentication, and a clean single-page workflow.",
+      "A full-stack notes app with guest mode, JWT authentication, and Spring Boot + React — the classic rite of passage, built properly.",
     src: withBasePath("/assets/projects-screenshots/portfolio/projects.png"),
     screenshots: ["projects.png"],
     skills: {
@@ -256,18 +489,18 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP>
-            Built a full-stack notes application with a React 19 + Vite
-            frontend and a Spring Boot backend backed by JPA.
+            A full-stack notes application built with React 19, Vite, and Java
+            Spring Boot backed by JPA and an H2 database.
           </TypographyP>
           <TypographyH3 className="my-4 mt-8">Highlights</TypographyH3>
           <TypographyP>
-            The app supports JWT authentication, user-specific notes storage,
-            guest-mode notes in local storage, and a clean CRUD workflow.
+            The classic software engineer rite of passage, built with proper
+            production patterns: JWT authentication, isolated user note
+            stores, local storage guest mode, and clean RESTful CRUD workflows.
           </TypographyP>
           <TypographyP>
-            It uses an H2 relational database and is designed to be easy to run
-            locally with Docker or a single startup script, which keeps it
-            practical for demos and quick testing.
+            Containerized with Docker for simple one-command local startup and
+            demo runs.
           </TypographyP>
         </div>
       );
@@ -278,7 +511,7 @@ const projects: Project[] = [
     category: "Cyber Security",
     title: "Web Penetration Testing Toolkit",
     description:
-      "A FastAPI-based browser toolkit for reconnaissance, vulnerability discovery, and live-streamed security testing.",
+      "A FastAPI browser toolkit for reconnaissance, DNS intel, and live-streamed security scans (strictly for authorized testing).",
     src: withBasePath("/assets/projects-screenshots/portfolio/navbar.png"),
     screenshots: ["navbar.png"],
     skills: {
@@ -292,20 +525,19 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP>
-            Built a browser-based security testing toolkit that brings together
-            reconnaissance, WHOIS, DNS intelligence, file analysis, and web
-            server vulnerability checks in one interface.
+            A browser-based security testing toolkit bringing together DNS
+            intelligence, WHOIS reconnaissance, file analysis, and web server
+            vulnerability checks in one unified interface.
           </TypographyP>
-          <TypographyH3 className="my-4 mt-8">Architecture</TypographyH3>
+          <TypographyH3 className="my-4 mt-8">Architecture & Live Streaming</TypographyH3>
           <TypographyP>
-            FastAPI handles the backend services while the UI uses lightweight
-            server-rendered pages and live Server-Sent Events to stream results
-            without page reloads.
+            FastAPI powers the backend services while Server-Sent Events stream
+            live test output directly to the UI in real time — so you aren&rsquo;t
+            left staring at a frozen spinner wondering if your network dropped.
           </TypographyP>
           <TypographyP>
-            The project is positioned as an educational and authorized-testing
-            toolkit, with a strong focus on visibility into what each check is
-            doing.
+            Designed for educational security research and authorized auditing,
+            with full visibility into every check executed.
           </TypographyP>
         </div>
       );
@@ -316,7 +548,7 @@ const projects: Project[] = [
     category: "AI Developer Tooling",
     title: "Local-First AI Code Analysis Platform",
     description:
-      "A local-first code analysis platform for Python and PHP repositories using FastAPI, React, embeddings, and vector search.",
+      "A local-first code analysis platform for Python and PHP repos using FastAPI, React, vector embeddings, and local LLMs.",
     src: withBasePath("/assets/projects-screenshots/portfolio/landing.png"),
     screenshots: ["landing.png"],
     skills: {
@@ -330,19 +562,19 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP>
-            Built a local-first code analysis platform with a FastAPI backend
-            and React frontend that indexes repositories into a navigable code
-            graph.
+            A local-first code analysis platform that indexes Python and PHP
+            repositories into interactive, navigable code graphs.
           </TypographyP>
           <TypographyH3 className="my-4 mt-8">Capabilities</TypographyH3>
           <TypographyP>
-            The app integrates locally hosted language models through Ollama and
-            Open WebUI, along with embedding models and vector search, to make
-            Python and PHP repositories easier to analyse.
+            Integrates locally hosted LLMs via Ollama and Open WebUI with vector
+            embeddings to make large, complex, or legacy codebases
+            understandable without sharing proprietary source code with external
+            APIs.
           </TypographyP>
           <TypographyP>
-            It is designed around local execution and privacy, while still
-            supporting model-assisted graph refinement on a developer machine.
+            FastAPI backend with a snappy React frontend for exploring code
+            dependencies, call hierarchies, and architectural patterns.
           </TypographyP>
         </div>
       );

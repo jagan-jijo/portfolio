@@ -19,9 +19,9 @@ import SectionWrapper from "../ui/section-wrapper";
 
 const ProjectsSection = () => {
   return (
-    <SectionWrapper id="projects" className="max-w-7xl mx-auto md:h-[130vh]">
+    <SectionWrapper id="projects" className="max-w-7xl mx-auto min-h-screen py-20">
       <SectionHeader id='projects' title="Projects" />
-      <div className="grid grid-cols-1 md:grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {projects.map((project) => (
           <Modall key={project.id} project={project} />
         ))}
@@ -42,37 +42,48 @@ const ProjectsSection = () => {
 };
 const Modall = ({ project }: { project: Project }) => {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center w-full">
       <Modal>
-        <ModalTrigger className="bg-transparent flex justify-center group/modal-btn w-full">
-          <div className="w-full max-w-[400px] rounded-lg border border-border bg-card/70 p-6 text-left shadow-sm transition-colors hover:border-primary/30">
-            <div className="text-lg">{project.title}</div>
-            <div className="mt-2 text-xs uppercase tracking-wide text-muted-foreground">
-              {project.category}
+        <ModalTrigger className="bg-transparent flex justify-center group/modal-btn w-full p-0">
+          <div className="w-full h-full min-h-[175px] rounded-xl border border-border/80 bg-card/60 backdrop-blur-md p-6 text-left shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:bg-card/90 hover:shadow-xl hover:shadow-primary/5 flex flex-col justify-between">
+            <div>
+              <div className="text-[11px] uppercase tracking-wider font-semibold text-muted-foreground">
+                {project.category}
+              </div>
+              <div className="text-lg font-bold text-foreground mt-2 group-hover:text-primary transition-colors leading-snug">
+                {project.title}
+              </div>
             </div>
-            <div className="mt-4 inline-flex items-center rounded-full border border-border px-3 py-1 text-xs">
-              Software Developer
+            <div className="mt-4 flex items-center justify-between">
+              <div className="inline-flex items-center rounded-full border border-border/80 bg-secondary/40 px-2.5 py-0.5 text-xs text-muted-foreground">
+                Explore Details
+              </div>
+              {project.live && (
+                <span className="text-xs text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                  View →
+                </span>
+              )}
             </div>
           </div>
         </ModalTrigger>
-        <ModalBody className="md:max-w-4xl md:max-h-[80%] overflow-auto">
+        <ModalBody className="md:max-w-4xl md:max-h-[85%] overflow-auto">
           <SmoothScroll isInsideModal={true}>
             <ModalContent>
               <ProjectContents project={project} />
             </ModalContent>
           </SmoothScroll>
-          <ModalFooter className="gap-4">
-            <button className="px-2 py-1 bg-gray-200 text-black dark:bg-black dark:border-black dark:text-white border border-gray-300 rounded-md text-sm w-28">
+          <ModalFooter className="gap-3 border-t border-border/60">
+            <button className="px-4 py-2 bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-lg text-sm transition-colors font-medium">
               Close
             </button>
             {project.live ? (
               <Link href={project.live} target="_blank">
-                <button className="bg-black text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-black min-w-28">
+                <button className="bg-primary text-primary-foreground hover:bg-primary/90 text-sm px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
                   {project.linkLabel ?? "Visit"}
                 </button>
               </Link>
             ) : (
-              <div className="rounded-md border border-gray-300 px-3 py-1 text-center text-xs text-muted-foreground">
+              <div className="rounded-lg border border-border px-3 py-1.5 text-center text-xs text-muted-foreground">
                 Private / Gitea-managed
               </div>
             )}
