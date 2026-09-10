@@ -79,6 +79,7 @@ export const cvProfile = {
       title: "Backend Engineering",
       items: [
         "Python",
+        "Django",
         "FastAPI",
         "REST API development",
         "REST API consumption",
@@ -263,16 +264,16 @@ export const cvProfile = {
     {
       name: "DocMaker — Structured Document Platform",
       category: "Backend & Document Engineering",
-      visibility: "Gitea-hosted",
-      link: "https://www.git.jaganjijo.space",
+      visibility: "Public (Gitea)",
+      link: "https://git.jaganjijo.space/jagan/docmaker.git",
       description:
         "Local-first business document generation platform built with Django, Playwright, and SQLite to replace manual Photoshop/PSD editing with maintainable templates, modular clauses, and instant browser-based PDF generation.",
       highlights: [
         "Built to solve recurring operational bottlenecks for business owners and creator side-hustles by generating professional PDFs in minutes.",
-        "Replaced slow, manual design workflows (PSDs, Word files) with a schema-driven pipeline that generates pixel-perfect PDFs in minutes.",
+        "Engineered on Django with a multi-tenant workspace architecture, custom template rendering pipeline, and dynamic schema-driven form generation.",
         "Engineered headless Playwright rendering service for razor-sharp CSS print compilation while keeping sensitive documents 100% within the organization.",
         "Implemented dynamic forms, live HTML previews, modular clause libraries, document versioning, and immutable audit history.",
-        "Designed agent-ready API and CLI architecture for downstream automation and local orchestration.",
+        "Designed agent-ready API and CLI architecture with 78 automated Django unit tests enforcing strict validation, security, and rate limiting.",
       ],
       technologies: [
         "Python",

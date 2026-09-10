@@ -264,15 +264,24 @@ const projects: Project[] = [
     category: "Backend & Document Engineering",
     title: "DocMaker — Structured Document Platform",
     description:
-      "A local-first document engine turning structured data and reusable clauses into pixel-perfect PDFs in minutes — built to end the pain of Photoshop PSD invoices and designer turnaround bottlenecks.",
+      "A local-first document engine built with Django, Playwright, and SQLite turning structured data and reusable clauses into pixel-perfect PDFs in minutes — ending the pain of Photoshop PSD invoices and designer bottlenecks.",
     src: withBasePath("/assets/projects-screenshots/portfolio/project.png"),
     screenshots: ["project.png"],
     skills: {
-      frontend: [PROJECT_SKILLS.javascript],
-      backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.django, PROJECT_SKILLS.sqlite],
+      frontend: [
+        PROJECT_SKILLS.typescript,
+        PROJECT_SKILLS.javascript,
+      ],
+      backend: [
+        PROJECT_SKILLS.django,
+        PROJECT_SKILLS.python,
+        PROJECT_SKILLS.sqlite,
+        PROJECT_SKILLS.git,
+      ],
     },
-    live: "https://www.git.jaganjijo.space",
-    linkLabel: "View on Gitea",
+    github: "https://git.jaganjijo.space/jagan/docmaker",
+    live: "https://git.jaganjijo.space/jagan/docmaker.git",
+    linkLabel: "View Git Repo",
     get content() {
       return (
         <div>
@@ -307,7 +316,7 @@ const projects: Project[] = [
           </TypographyP>
           <TypographyP>
             <code className="rounded bg-zinc-800 px-2 py-1 text-xs text-zinc-300">
-              Custom Template + Structured JSON Data + Modular Clauses → HTML Live Preview → Pixel-Perfect PDF
+              Custom Template + Structured JSON Data + Modular Clauses → HTML Live Preview → Pixel-Perfect PDF / DOCX
             </code>
           </TypographyP>
           <TypographyP>
@@ -315,35 +324,33 @@ const projects: Project[] = [
             100% inside your organization—no third-party cloud leaks, no
             broken font alignments.
           </TypographyP>
-          <TypographyH3 className="my-4 mt-8">Key Capabilities</TypographyH3>
+          <TypographyH3 className="my-4 mt-8">Why Django Was the Backbone</TypographyH3>
           <TypographyP>
-            • <strong>Dynamic Forms & Live Browser Preview:</strong> Schema-driven
-            inputs with immediate visual feedback before compiling.
-            <br />
-            • <strong>Headless Playwright PDF Engine:</strong> Generates razor-sharp,
-            print-perfect vector PDFs via standards-compliant CSS print layouts.
-            <br />
-            • <strong>Modular Clause & Content Library:</strong> Reusable,
-            conditionally injected legal clauses and brand blocks across doc types.
-            <br />
-            • <strong>Drafts & Version Audit Trail:</strong> Immutable snapshot
-            history so you can track revisions and regenerate past outputs anytime.
-            <br />
-            • <strong>Agent & API Ready:</strong> Standalone UI and CLI with a
-            clean service layer ready for downstream AI agents (Hermes) and internal
-            CRMs.
+            DocMaker is built from the ground up on <strong>Django</strong>, taking full advantage of the framework&rsquo;s robustness, security, and developer ergonomics:
           </TypographyP>
-          <TypographyH3 className="my-4 mt-8">Private Infrastructure</TypographyH3>
           <TypographyP>
-            Built with Django, Playwright, JSON Schema, and SQLite. Hosted and
-            managed on my personal Gitea server at{" "}
+            • <strong>Multi-Tenant Workspace Engine:</strong> Django middleware and route dispatchers provide clean customer isolation (<code>active_customer</code>). Each tenant gets dedicated schema defaults, customized branding (logos, color palettes, tax rates, signatory details), and isolated document archives.
+            <br />
+            • <strong>High-Performance Template Compilation:</strong> Django&rsquo;s templating engine dynamically merges JSON data, conditional legal clauses, and CSS print media stylesheets to assemble documents before passing them to a headless Playwright Chromium worker for sub-second vector PDF generation.
+            <br />
+            • <strong>Modular Reusable Library:</strong> Leverages Django&rsquo;s service layer to manage reusable legal clauses and branded boilerplate blocks (stored in structured YAML catalogs), letting users mix and match terms with zero duplication.
+            <br />
+            • <strong>Immutable Version Audit Trail:</strong> Every document draft and compile cycle creates an immutable version snapshot (<code>v1</code>, <code>v2</code>, &hellip;) with exact PDF, DOCX, JPG preview, and JSON payload retention for compliance.
+            <br />
+            • <strong>REST API &amp; Agentic Automation:</strong> Django API views with OpenAPI 3.0 schemas and telemetry beacons make DocMaker directly accessible to command-line tools (CLI guide) and autonomous AI coding agents (Hermes).
+            <br />
+            • <strong>Comprehensive Test Suite:</strong> 78 automated Django unit tests enforcing rate limiting, upload validation, pricing calculations, and document cloning with 100% pass rates.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">Public Open-Source Repository</TypographyH3>
+          <TypographyP>
+            The project repository has been made public on my self-hosted Gitea forge. You can inspect the architecture, Django service layer, and Playwright rendering pipeline directly at{" "}
             <a
-              href="https://www.git.jaganjijo.space"
+              href="https://git.jaganjijo.space/jagan/docmaker.git"
               target="_blank"
               rel="noreferrer"
-              className="text-purple-400 underline underline-offset-4 hover:text-purple-300"
+              className="text-purple-400 underline underline-offset-4 hover:text-purple-300 font-medium"
             >
-              www.git.jaganjijo.space
+              git.jaganjijo.space/jagan/docmaker.git
             </a>
             .
           </TypographyP>
