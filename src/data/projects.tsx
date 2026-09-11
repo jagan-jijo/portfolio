@@ -162,7 +162,7 @@ const projects: Project[] = [
       backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.fastapi, PROJECT_SKILLS.sqlite],
     },
     github: "https://github.com/jagan-jijo/modelscout",
-    live: "https://github.com/jagan-jijo/modelscout",
+    live: "https://pypi.org/project/modelscout-llm/",
     linkLabel: "View GitHub repo",
     get content() {
       return (
