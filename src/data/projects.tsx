@@ -152,7 +152,7 @@ const projects: Project[] = [
   {
     id: "modelscout",
     category: "Local AI & Developer Tools",
-    title: "ModelScout",
+    title: "ModelScout: Local AI Model Compatibility Scanner",
     description:
       "Check which local AI models fit your machine before downloading the weights. Memory and speed estimates, with a terminal scanner and local web dashboard.",
     src: withBasePath("/assets/projects-screenshots/portfolio/project.png"),
@@ -168,8 +168,7 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP>
-            Downloading a model just to find out it eats all your RAM is a
-            pain. ModelScout checks your hardware and gives you a shortlist
+            ModelScout checks your hardware and gives you a shortlist
             before you download the weights. You can scan your own machine or
             supply a different GPU and memory size to see what might fit.
           </TypographyP>
@@ -248,7 +247,7 @@ const projects: Project[] = [
   {
     id: "jagskills",
     category: "AI Engineering & Agentic Tooling",
-    title: "Jagskills — AI Coding Skills Framework",
+    title: "Jagskills: AI Coding Skills Framework",
     description:
       "An engineering framework and context management system that cures AI coding agents of vibe-coded slop by enforcing TDD, verification gates, and durable project memory.",
     src: withBasePath("/assets/projects-screenshots/portfolio/skills.png"),
@@ -304,7 +303,7 @@ const projects: Project[] = [
   {
     id: "docmaker",
     category: "Backend & Document Engineering",
-    title: "DocMaker — Structured Document Platform",
+    title: "DocMaker: Structured Document Platform",
     description:
       "A local-first document engine built with Django, Playwright, and SQLite turning structured data and reusable clauses into pixel-perfect PDFs in minutes — ending the pain of Photoshop PSD invoices and designer bottlenecks.",
     src: withBasePath("/assets/projects-screenshots/portfolio/project.png"),
@@ -522,7 +521,7 @@ const projects: Project[] = [
   {
     id: "notes-app",
     category: "Full-Stack Product",
-    title: "Notes Application",
+    title: "Notes Application using Spring Boot + React",
     description:
       "A full-stack notes app with guest mode, JWT authentication, and Spring Boot + React — the classic rite of passage, built properly.",
     src: withBasePath("/assets/projects-screenshots/portfolio/projects.png"),
