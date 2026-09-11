@@ -150,6 +150,48 @@ export const projectSectionNote = {
 
 const projects: Project[] = [
   {
+    id: "modelscout",
+    category: "Local AI & Developer Tools",
+    title: "ModelScout",
+    description:
+      "Check which local AI models fit your machine before downloading the weights. Memory and speed estimates, with a terminal scanner and local web dashboard.",
+    src: withBasePath("/assets/projects-screenshots/portfolio/project.png"),
+    screenshots: [],
+    skills: {
+      frontend: [PROJECT_SKILLS.javascript],
+      backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.fastapi, PROJECT_SKILLS.sqlite],
+    },
+    github: "https://github.com/jagan-jijo/modelscout",
+    live: "https://github.com/jagan-jijo/modelscout",
+    linkLabel: "View GitHub repo",
+    get content() {
+      return (
+        <div>
+          <TypographyP>
+            Downloading a model just to find out it eats all your RAM is a
+            pain. ModelScout checks your hardware and gives you a shortlist
+            before you download the weights. You can scan your own machine or
+            supply a different GPU and memory size to see what might fit.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">Run it when you need it</TypographyH3>
+          <TypographyP>
+            The launcher sets up the Python environment and installs missing
+            packages. Run it in the terminal, or start the local web dashboard
+            to compare recommendations. I&rsquo;m focusing on macOS and Linux
+            first; Windows support is still basic.
+          </TypographyP>
+          <TypographyP>
+            Memory estimates account for the weights and context cache.
+            Speed ranges come from hardware bandwidth estimates. These help
+            narrow down the options, but the real result depends on your
+            inference runtime. The bundled benchmark scores are provisional
+            and still need checking against their original sources.
+          </TypographyP>
+        </div>
+      );
+    },
+  },
+  {
     id: "sidestreamer",
     category: "macOS & Creative Workflow",
     title: "Sidestreamer for Adobe Premiere Pro",
