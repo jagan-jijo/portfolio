@@ -160,7 +160,7 @@ const projects: Project[] = [
     skills: {
       frontend: [PROJECT_SKILLS.javascript],
       backend: [PROJECT_SKILLS.python, PROJECT_SKILLS.fastapi, PROJECT_SKILLS.sqlite],
-    },
+    }, 
     github: "https://github.com/jagan-jijo/modelscout",
     live: "https://pypi.org/project/modelscout-llm/",
     linkLabel: "View GitHub repo",
